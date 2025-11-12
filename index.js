@@ -36,7 +36,24 @@ async function run() {
     const transactionCollection = userDB.collection('transactions');
     const usersCollection = userDB.collection('users');
 
-    // USERS APIs
+
+    /////----- USERS APIs -----//////
+    // create user in db
+    app.post('/users',async(req,res)=>{
+      const newUser = req.body;
+      const email = req.body.email;
+      const query = { email:  email}
+      const existingUser = await usersCollection.findOne(query);
+      if(existingUser){
+        res.send({ message: 'user already exits. do not need to insert again' })
+      }
+      else{
+        const result = await usersCollection.insertOne(newUser);
+        res.send(result)
+      }
+    })
+    ////---- TRANSACTION APIs---- /////
+
     // find transaction based on email
     app.get('/transactions',async(req,res)=> {
         console.log(req.query)
