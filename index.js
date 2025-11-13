@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.env.PORT || 3000;
@@ -10,8 +11,8 @@ app.use(express.json())
 
 // money_flow_user
 // izFbDgKiYGSEIDq0
-
-const uri = "mongodb+srv://money_flow_user:izFbDgKiYGSEIDq0@cluster0.gafegcj.mongodb.net/?appName=Cluster0";
+// console.log(process.env)
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.gafegcj.mongodb.net/?appName=Cluster0`;
 
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -88,8 +89,13 @@ async function run() {
         const query = {_id: new ObjectId(id)}
         const update = {
             $set: {
+                // amount: updateTransaction.amount,
+                // category: updateTransaction.category
+                type: updateTransaction.type,
+                category: updateTransaction.category,
                 amount: updateTransaction.amount,
-                category: updateTransaction.category
+                description: updateTransaction.description,
+                date: updateTransaction.date
             }
         }
         const result = await transactionCollection.updateOne(query,update)
