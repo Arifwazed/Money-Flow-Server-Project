@@ -31,7 +31,7 @@ app.get('/',(req,res)=> {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const userDB = client.db('money_flow_db');
     const transactionCollection = userDB.collection('transactions');
@@ -64,10 +64,18 @@ async function run() {
             query.email = email;
         }
 
-        const cursor = transactionCollection.find(query);
+        const cursor = transactionCollection.find(query).sort({date: -1});
         const result = await cursor.toArray();
         res.send(result)
     })
+
+
+
+
+
+
+
+
     // find single transaction based on id
     app.get('/transactions/:id',async(req,res)=>{
         const id = req.params.id;
