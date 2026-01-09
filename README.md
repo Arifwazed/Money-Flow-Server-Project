@@ -128,6 +128,4 @@ Full-Stack Developer
 
 * GitHub: [https://github.com/Arifwazed](https://github.com/Arifwazed)
 
----
 
-⭐ If you find this project useful, consider giving it a star!
